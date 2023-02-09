@@ -14,6 +14,7 @@ namespace RPGHeros.Heros
         {
             Level = 1;
             LevelAttributes = new HeroAttributes() { Strength = 2, Dexterity = 6, Intelligence = 1 };
+         
             Equipment = new Dictionary<Enums.Slot, Item>(4);
             Equipment.Add(Slot.Weapon, null);
             Equipment.Add(Slot.Head, null);
