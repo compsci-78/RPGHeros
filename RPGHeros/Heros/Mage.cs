@@ -34,15 +34,15 @@ namespace RPGHeros.Heros
             throw new NotImplementedException();
         }
 
-        public override void Equip(Weapon weapon)
-        {
-            throw new NotImplementedException();
-        }
+        //public override void Equip(Weapon weapon)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public override void Equip(Armor armor)
-        {
-            throw new NotImplementedException();
-        }
+        //public override void Equip(Armor armor)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public override void LevelUp()
         {
