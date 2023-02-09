@@ -11,11 +11,12 @@ namespace RPGHeros.Heros
     public abstract class Hero
     {
         public string Name { get; set; }
-        public HeroAttributes Level { get; set; }
+        //public HeroAttributes Level { get; set; }
+        public int Level { get; set; }
         public HeroAttributes LevelAttributes { get; set; }
         public Dictionary<Slot,Item> Equipment { get; set; }
-        public List<Item> ValidWeaponTypes{ get; set; }
-        public List<Item> ValidArmorTypes { get; set; }
+        public List<WeaponType> ValidWeaponTypes{ get; set; }
+        public List<ArmorType> ValidArmorTypes { get; set; }
 
         public Hero(string name)
         {
