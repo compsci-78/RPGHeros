@@ -64,8 +64,21 @@ namespace RPGHeros.Heros
             if (!validArmor)
                 throw new InvalidArmorTypeException();
         }
-        public abstract int Damage();
-        public abstract HeroAttributes TotalAttributes();
+        public abstract int Damage();        
+        public HeroAttributes TotalAttributes() {
+            
+            var totalAttributes = new HeroAttributes();
+
+            foreach (KeyValuePair<Slot,Item> keyValue in Equipment)
+            {
+                if (keyValue.Key != Slot.Weapon)
+                    totalAttributes = totalAttributes + ((Armor)keyValue.Value).ArmorAttribute;
+            }
+
+            totalAttributes = totalAttributes + LevelAttributes;
+
+            return totalAttributes ;
+        }
         public void Display() { }
     }
 }

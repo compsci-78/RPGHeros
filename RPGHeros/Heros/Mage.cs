@@ -31,29 +31,16 @@ namespace RPGHeros.Heros
 
         public override int Damage()
         {
-            throw new NotImplementedException();
+            var weponDamage = Equipment[Slot.Weapon] == null ? 1 : ((Weapon)Equipment[Slot.Weapon]).WeaponDamage;
+            var totalAttributes = TotalAttributes();
+
+            return weponDamage * (1 + totalAttributes.Intelligence / 100);
         }
-
-        //public override void Equip(Weapon weapon)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public override void Equip(Armor armor)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         public override void LevelUp()
         {
             Level += 1;
             var newHerroAttributes = new HeroAttributes() { Strength = 1, Dexterity = 1, Intelligence = 5 };
             LevelAttributes = LevelAttributes + newHerroAttributes;
-        }
-
-        public override HeroAttributes TotalAttributes()
-        {
-            throw new NotImplementedException();
         }
     }
 }
