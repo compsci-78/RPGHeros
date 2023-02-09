@@ -16,8 +16,8 @@ namespace RPGHeros.Heros
         //public HeroAttributes Level { get; set; }
         public int Level { get; set; }
         public HeroAttributes LevelAttributes { get; set; }
-        public Dictionary<Slot,Item> Equipment { get; set; }
-        public List<WeaponType> ValidWeaponTypes{ get; set; }
+        public Dictionary<Slot, Item> Equipment { get; set; }
+        public List<WeaponType> ValidWeaponTypes { get; set; }
         public List<ArmorType> ValidArmorTypes { get; set; }
 
         public Hero(string name)
@@ -25,31 +25,33 @@ namespace RPGHeros.Heros
             this.Name = name;
         }
         public abstract void LevelUp();
-        public void Equip(Weapon weapon) {
+        public void Equip(Weapon weapon)
+        {
 
             bool validWepon = false;
             // If weapon level higher than Hero´s Throw an exception
-            if (weapon.RequiredLevel > Level) 
+            if (weapon.RequiredLevel > Level)
                 throw new InvalidWeaponTypeException("Invalid weapon: Higher level required.");
 
             // Checking valid weapons
             foreach (var weaponType in ValidWeaponTypes)
             {
-                if (weaponType==weapon.WeaponType) 
+                if (weaponType == weapon.WeaponType)
                 {
-                    Equipment[weapon.SlotType]= weapon;
-                    validWepon= true;
+                    Equipment[weapon.SlotType] = weapon;
+                    validWepon = true;
                 }
             }
 
             // If wepon not found throw Invalid weapon exception
-            if(!validWepon)
+            if (!validWepon)
                 throw new InvalidWeaponTypeException();
         }
-        public void Equip(Armor armor) {
+        public void Equip(Armor armor)
+        {
 
             bool validArmor = false;
-            
+
             // Checking valid weapons
             foreach (var armowType in ValidArmorTypes)
             {
@@ -64,12 +66,13 @@ namespace RPGHeros.Heros
             if (!validArmor)
                 throw new InvalidArmorTypeException();
         }
-        public abstract int Damage();        
-        public HeroAttributes TotalAttributes() {
-            
+        public abstract int Damage();
+        public HeroAttributes TotalAttributes()
+        {
+
             var totalAttributes = new HeroAttributes();
 
-            foreach (KeyValuePair<Slot,Item> keyValue in Equipment)
+            foreach (KeyValuePair<Slot, Item> keyValue in Equipment)
             {
                 if (keyValue.Key != Slot.Weapon)
                     totalAttributes = totalAttributes + ((Armor)keyValue.Value).ArmorAttribute;
@@ -77,8 +80,22 @@ namespace RPGHeros.Heros
 
             totalAttributes = totalAttributes + LevelAttributes;
 
-            return totalAttributes ;
+            return totalAttributes;
         }
-        public void Display() { }
+        public void Display()
+        {
+            var totalAttributes = TotalAttributes();
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Name ..............: " + Name);
+            sb.Append("Level .............: " + Level);
+            sb.Append("Class .............: " + this.GetType().Name);
+            sb.Append("Total strength ....: " + totalAttributes.Strength);
+            sb.Append("Total dexterity ...: " + totalAttributes.Dexterity);
+            sb.Append("Total intelligence : " + totalAttributes.Intelligence);
+            sb.Append("Damage ............: " + Damage());
+
+            Console.WriteLine(sb);
+        }
     }
 }
