@@ -22,10 +22,7 @@ namespace RPGHeros.Heros
         {
             this.Name = name;
         }
-        public void LevelUp(HeroAttributes heroAttributes) {
-            Level += 1;            
-            LevelAttributes = LevelAttributes + heroAttributes;
-        }
+        public abstract void LevelUp();
         public abstract void Equip(Weapon weapon);
         public abstract void Equip(Armor armor);
         public abstract int Damage();

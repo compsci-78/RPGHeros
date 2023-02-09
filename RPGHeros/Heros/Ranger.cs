@@ -44,6 +44,12 @@ namespace RPGHeros.Heros
             throw new NotImplementedException();
         }
 
+        public override void LevelUp()
+        {
+            Level += 1;
+            var newHerroAttributes = new HeroAttributes() { Strength = 1, Dexterity = 5, Intelligence = 1 };
+            LevelAttributes = LevelAttributes + newHerroAttributes;
+        }
 
         public override HeroAttributes TotalAttributes()
         {
