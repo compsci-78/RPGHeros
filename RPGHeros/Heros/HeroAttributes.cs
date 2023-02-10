@@ -32,8 +32,8 @@ namespace RPGHeros.Heros
             return new HeroAttributes()
             {
                 Strength = leftSide.Strength + rightSide.Strength,
-                Dexterity = leftSide.Dexterity = rightSide.Dexterity,
-                Intelligence = leftSide.Dexterity + rightSide.Intelligence
+                Dexterity = leftSide.Dexterity + rightSide.Dexterity,
+                Intelligence = leftSide.Intelligence + rightSide.Intelligence
             };
         }
     }

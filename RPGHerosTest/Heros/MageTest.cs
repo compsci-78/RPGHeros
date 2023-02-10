@@ -33,12 +33,41 @@ namespace RPGHerosTest.Heros
         {
             //Arangement
             var name = "Mage";
-            var expectedLevelAttribute = new HeroAttributes() { Strength = 1, Dexterity = 1, Intelligence = 8 };
+            var expected = new HeroAttributes() { Strength = 1, Dexterity = 1, Intelligence = 8 };
             //Act
             var mage = new Mage(name);
-            var actualLevelAttribute = mage.LevelAttributes;
+            var actual = mage.LevelAttributes;
             //Assertion
-            Assert.Equal(expectedLevelAttribute, actualLevelAttribute);
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void LevelUp_IncreasesHeroLevel_ShouldIncrementLevel() 
+        {
+            //Arangement
+            var name = "Mage";
+            var expected = 2;
+            //Act
+            var mage = new Mage(name);
+            mage.LevelUp();
+            var actual = mage.Level;
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void LevelUp_IncreasesHeroLevelAttributes_ShouldIncrementLevelAttributes()
+        {                        
+            // 1 1 8 => Level 1                       
+            // 1 1 5 => Adds to level 1 by LeveUp() method.
+
+            //Arangement
+            var name = "Mage";
+            var expected = new HeroAttributes() { Strength = 2, Dexterity = 2 ,Intelligence=13 };
+            //Act
+            var mage = new Mage(name);
+            mage.LevelUp();
+            var actual = mage.LevelAttributes;
+            //Assertion
+            Assert.Equal(expected, actual);
         }
     }
 }
