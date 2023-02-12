@@ -201,6 +201,73 @@ namespace RPGHerosTest.Heros
             //Assertion
             Assert.Equal(expected, actual);
         }
+        [Fact]
+        public void Damage_CalculatingHerosDamageWithNoWeapon_ShouldReturnCorrectDamage()
+        {
+            //Arrangement                        
+            //Initial values { Strength = 5, Dexterity = 2, Intelligence = 1 }
+            //Hero damage = WeaponDamage * (1 + (TotalStrength / 100))
+            //If no weapon weaponDamge = 1
+            var expected = 1;
+            //Act
+            var warrior = new Warrior("Warrior");
+            var actual = warrior.Damage();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void Damage_CalculatingHerosDamageWithValidWeapon_ShouldReturnCorrectDamage()
+        {
+            //Arrangement                        
+            //Initial values { Strength = 5, Dexterity = 2, Intelligence = 1 }
+            //Hero damage = WeaponDamage * (1 + (TotalStrength / 100))
+            //If no weapon weaponDamge = 1
+            var expected = 2;
+            var weapon = new Weapon("Axes", 0, Slot.Weapon, WeaponType.Axes, 2);
+            //Act
+            var warrior = new Warrior("Warrior");
+            warrior.Equip(weapon);
+            var actual = warrior.Damage();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void Damage_CalculatingHerosDamageWithReplacedValidWeapon_ShouldReturnCorrectDamage()
+        {
+            //Arrangement                        
+            //Initial values { Strength = 5, Dexterity = 2, Intelligence = 1 }
+            //Hero damage = WeaponDamage * (1 + (TotalStrength / 100))
+            //If no weapon weaponDamge = 1
+            var expected = 3;
+            var weapon1 = new Weapon("Axes", 0, Slot.Weapon, WeaponType.Axes, 2);
+            var weapon2 = new Weapon("Hammers", 0, Slot.Weapon, WeaponType.Hammers, 3);
+            //Act
+            var warrior = new Warrior("Warrior");
+            warrior.Equip(weapon1);
+            warrior.Equip(weapon2);
+            var actual = warrior.Damage();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void Damage_CalculatingHerosDamageWithValidWeaponAndArmor_ShouldReturnCorrectDamage()
+        {
+            //Arrangement                        
+            //Initial values { Strength = 5, Dexterity = 2, Intelligence = 1 }
+            //Hero damage = WeaponDamage * (1 + (TotalStrength / 100))
+            //If no weapon weaponDamge = 1
+            var expected = 2;
+            var weapon = new Weapon("Hammers", 0, Slot.Weapon, WeaponType.Hammers, 2);
+            var armor = new Armor("Mail", 0, Slot.Head, ArmorType.Mail, new HeroAttributes());
+            //Act
+            var warrior = new Warrior("Warrior");
+            warrior.Equip(weapon);
+            warrior.Equip(armor);
+
+            var actual = warrior.Damage();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
         #endregion
     }
 }

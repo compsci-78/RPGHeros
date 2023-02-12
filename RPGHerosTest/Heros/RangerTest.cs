@@ -200,6 +200,55 @@ namespace RPGHerosTest.Heros
             //Assertion
             Assert.Equal(expected, actual);
         }
+        [Fact]
+        public void Damage_CalculatingHerosDamageWithNoWeapon_ShouldReturnCorrectDamage()
+        {
+            //Arrangement                        
+            //Initial values { Strength = 1, Dexterity = 7, Intelligence = 1 }
+            //Hero damage = WeaponDamage * (1 + (TotalDexterity / 100))
+            //If no weapon weaponDamge = 1
+            var expected = 1;                       
+            //Act
+            var ranger = new Ranger("Ranger");
+            var actual = ranger.Damage();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void Damage_CalculatingHerosDamageWithValidWeapon_ShouldReturnCorrectDamage()
+        {
+            //Arrangement                        
+            //Initial values { Strength = 1, Dexterity = 7, Intelligence = 1 }
+            //Hero damage = WeaponDamage * (1 + (TotalDexterity / 100))
+            //If no weapon weaponDamge = 1
+            var expected = 2;
+            var weapon = new Weapon("Bows", 0, Slot.Weapon, WeaponType.Bows, 2);
+            //Act
+            var ranger = new Ranger("Ranger");
+            ranger.Equip(weapon);
+            var actual = ranger.Damage();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void Damage_CalculatingHerosDamageWithValidWeaponAndArmor_ShouldReturnCorrectDamage()
+        {
+            //Arrangement                        
+            //Initial values { Strength = 1, Dexterity = 7, Intelligence = 1 }
+            //Hero damage = WeaponDamage * (1 + (TotalDexterity / 100))
+            //If no weapon weaponDamge = 1
+            var expected = 2;
+            var weapon = new Weapon("Bows", 0, Slot.Weapon, WeaponType.Bows, 2);
+            var armor = new Armor("Leather", 0, Slot.Body, ArmorType.Leather, new HeroAttributes());
+            //Act
+            var ranger = new Ranger("Ranger");
+            ranger.Equip(weapon);
+            ranger.Equip(armor);
+
+            var actual = ranger.Damage();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
         #endregion
     }
 }

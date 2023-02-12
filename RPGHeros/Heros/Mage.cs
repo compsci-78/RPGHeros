@@ -33,7 +33,7 @@ namespace RPGHeros.Heros
             var weponDamage = Equipment[Slot.Weapon] == null ? 1 : ((Weapon)Equipment[Slot.Weapon]).WeaponDamage;
             var totalAttributes = TotalAttributes();
 
-            return weponDamage * (1 + totalAttributes.Intelligence / 100);
+            return weponDamage * (1 + (totalAttributes.Intelligence / 100));
         }
         public override void LevelUp()
         {

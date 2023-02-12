@@ -199,6 +199,73 @@ namespace RPGHerosTest.Heros
             //Assertion
             Assert.Equal(expected, actual);
         }
+        [Fact]
+        public void Damage_CalculatingHerosDamageWithNoWeapon_ShouldReturnCorrectDamage()
+        {
+            //Arrangement                        
+            //Initial values { Strength = 2, Dexterity = 6, Intelligence = 1 }
+            //Hero damage = WeaponDamage * (1 + (TotalDexterity / 100))
+            //If no weapon weaponDamge = 1
+            var expected = 1;
+            //Act
+            var rogue = new Rogue("Rogue");
+            var actual = rogue.Damage();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void Damage_CalculatingHerosDamageWithValidWeapon_ShouldReturnCorrectDamage()
+        {
+            //Arrangement                        
+            //Initial values { Strength = 2, Dexterity = 6, Intelligence = 1 }
+            //Hero damage = WeaponDamage * (1 + (TotalDexterity / 100))
+            //If no weapon weaponDamge = 1
+            var expected = 2;
+            var weapon = new Weapon("Daggers", 0, Slot.Weapon, WeaponType.Daggers, 2);
+            //Act
+            var rogue = new Rogue("Rogue");
+            rogue.Equip(weapon);
+            var actual = rogue.Damage();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void Damage_CalculatingHerosDamageWithReplacedValidWeapon_ShouldReturnCorrectDamage()
+        {
+            //Arrangement                        
+            //Initial values { Strength = 2, Dexterity = 6, Intelligence = 1 }
+            //Hero damage = WeaponDamage * (1 + (TotalDexterity / 100))
+            //If no weapon weaponDamge = 1
+            var expected = 3;
+            var weapon1 = new Weapon("Dagers", 0, Slot.Weapon, WeaponType.Daggers, 2);
+            var weapon2 = new Weapon("Swords", 0, Slot.Weapon, WeaponType.Swords, 3);
+            //Act
+            var rogue = new Rogue("Rogue");
+            rogue.Equip(weapon1);
+            rogue.Equip(weapon2);
+            var actual = rogue.Damage();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void Damage_CalculatingHerosDamageWithValidWeaponAndArmor_ShouldReturnCorrectDamage()
+        {
+            //Arrangement                        
+            //Initial values { Strength = 2, Dexterity = 6, Intelligence = 1 }
+            //Hero damage = WeaponDamage * (1 + (TotalDexterity / 100))
+            //If no weapon weaponDamge = 1
+            var expected = 2;
+            var weapon = new Weapon("Swords", 0, Slot.Weapon, WeaponType.Swords, 2);
+            var armor = new Armor("Leather", 0, Slot.Body, ArmorType.Leather, new HeroAttributes());
+            //Act
+            var rogue = new Rogue("Rogue");
+            rogue.Equip(weapon);
+            rogue.Equip(armor);
+
+            var actual = rogue.Damage();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
         #endregion
     }
 }
