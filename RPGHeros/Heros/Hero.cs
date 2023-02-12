@@ -74,7 +74,7 @@ namespace RPGHeros.Heros
 
             foreach (KeyValuePair<Slot, Item> keyValue in Equipment)
             {
-                if (keyValue.Key != Slot.Weapon)
+                if (keyValue.Key != Slot.Weapon && keyValue.Value !=null)
                     totalAttributes = totalAttributes + ((Armor)keyValue.Value).ArmorAttribute;
             }
 

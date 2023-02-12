@@ -142,6 +142,63 @@ namespace RPGHerosTest.Heros
             //Assertion
             Assert.Throws<InvalidArmorTypeException>(() => rogue.Equip(armorWithRequiredLevel));
         }
+        [Fact]
+        public void TotalAttributes_CalculatingHerosTotalAttributesWithNoEquipment_ShouldReturnCorrectHeroAttributes()
+        {
+            //Arrangement            
+            var expected = new HeroAttributes() { Strength = 2, Dexterity = 6, Intelligence = 1 };
+            //Act
+            var rogue = new Rogue("Rogue");
+            var actual = rogue.TotalAttributes();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void TotalAttributes_CalculatingHerosTotalAttributesWithOneEquipment_ShouldReturnCorrectHeroAttributes()
+        {
+            //Arrangement                        
+            // Initial values { Strength = 2, Dexterity = 6, Intelligence = 1 }
+            var expected = new HeroAttributes() { Strength = 3, Dexterity = 7, Intelligence = 2 };
+            var armor = new Armor("Leather", 0, Slot.Body, ArmorType.Leather, new HeroAttributes() { Strength = 1, Dexterity = 1, Intelligence = 1 });
+            //Act
+            var rogue = new Rogue("Rogue");
+            rogue.Equip(armor);
+            var actual = rogue.TotalAttributes();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void TotalAttributes_CalculatingHerosTotalAttributesWithTwoEquipment_ShouldReturnCorrectHeroAttributes()
+        {
+            //Arrangement                        
+            // Initial values { Strength = 2, Dexterity = 6, Intelligence = 1 }
+            var expected = new HeroAttributes() { Strength = 4, Dexterity = 8, Intelligence = 3 };
+            var armor1 = new Armor("Leather", 0, Slot.Head, ArmorType.Leather, new HeroAttributes() { Strength = 1, Dexterity = 1, Intelligence = 1 });
+            var armor2 = new Armor("Mail", 0, Slot.Body, ArmorType.Mail, new HeroAttributes() { Strength = 1, Dexterity = 1, Intelligence = 1 });
+            //Act
+            var rogue = new Rogue("Rogue");
+            rogue.Equip(armor1);
+            rogue.Equip(armor2);
+            var actual = rogue.TotalAttributes();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void TotalAttributes_CalculatingHerosTotalAttributesWithReplacedEquipment_ShouldReturnCorrectHeroAttributes()
+        {
+            //Arrangement                        
+            // Initial values { Strength = 2, Dexterity = 6, Intelligence = 1 }
+            var expected = new HeroAttributes() { Strength = 3, Dexterity = 7, Intelligence = 2 };
+            var armor1 = new Armor("Leather", 0, Slot.Body, ArmorType.Leather, new HeroAttributes() { Strength = 1, Dexterity = 1, Intelligence = 1 });
+            var armor2 = new Armor("Mail", 0, Slot.Body, ArmorType.Mail, new HeroAttributes() { Strength = 1, Dexterity = 1, Intelligence = 1 });
+            //Act
+            var rogue = new Rogue("Rogue");
+            rogue.Equip(armor1);
+            rogue.Equip(armor2);
+            var actual = rogue.TotalAttributes();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
         #endregion
     }
 }

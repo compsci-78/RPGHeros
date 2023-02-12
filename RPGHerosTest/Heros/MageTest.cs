@@ -142,6 +142,63 @@ namespace RPGHerosTest.Heros
             //Assertion
             Assert.Throws<InvalidArmorTypeException>(() => mage.Equip(armorWithRequiredLevel));
         }
+        [Fact]
+        public void TotalAttributes_CalculatingHerosTotalAttributesWithNoEquipment_ShouldReturnCorrectHeroAttributes()
+        {
+            //Arrangement            
+            var expected = new HeroAttributes() {Strength=1,Dexterity=1,Intelligence=8 };
+            //Act
+            var mage = new Mage("Mage");
+            var actual=mage.TotalAttributes();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void TotalAttributes_CalculatingHerosTotalAttributesWithOneEquipment_ShouldReturnCorrectHeroAttributes()
+        {
+            //Arrangement                        
+            // Initial values { Strength = 1, Dexterity = 1, Intelligence = 8 }
+            var expected = new HeroAttributes() { Strength = 2, Dexterity = 2, Intelligence = 9 };
+            var armor = new  Armor("Cloth",0,Slot.Body,ArmorType.Cloth, new HeroAttributes() { Strength = 1, Dexterity = 1, Intelligence = 1 });
+            //Act
+            var mage = new Mage("Mage");
+            mage.Equip(armor);
+            var actual = mage.TotalAttributes();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void TotalAttributes_CalculatingHerosTotalAttributesWithTwoEquipment_ShouldReturnCorrectHeroAttributes()
+        {
+            //Arrangement                        
+            // Initial values { Strength = 1, Dexterity = 1, Intelligence = 8 }
+            var expected = new HeroAttributes() { Strength = 3, Dexterity = 3, Intelligence = 10 };
+            var armor1 = new Armor("Cloth", 0, Slot.Body, ArmorType.Cloth, new HeroAttributes() { Strength = 1, Dexterity = 1, Intelligence = 1 });
+            var armor2 = new Armor("Cloth", 0, Slot.Head, ArmorType.Cloth, new HeroAttributes() { Strength = 1, Dexterity = 1, Intelligence = 1 });
+            //Act
+            var mage = new Mage("Mage");
+            mage.Equip(armor1);
+            mage.Equip(armor2);
+            var actual = mage.TotalAttributes();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void TotalAttributes_CalculatingHerosTotalAttributesWithReplacedEquipment_ShouldReturnCorrectHeroAttributes()
+        {
+            //Arrangement                        
+            // Initial values { Strength = 1, Dexterity = 1, Intelligence = 8 }
+            var expected = new HeroAttributes() { Strength = 2, Dexterity = 2, Intelligence = 9 };
+            var armor1 = new Armor("Cloth", 0, Slot.Body, ArmorType.Cloth, new HeroAttributes() { Strength = 1, Dexterity = 1, Intelligence = 1 });
+            var armor2 = new Armor("Cloth", 0, Slot.Body, ArmorType.Cloth, new HeroAttributes() { Strength = 1, Dexterity = 1, Intelligence = 1 });
+            //Act
+            var mage = new Mage("Mage");
+            mage.Equip(armor1);
+            mage.Equip(armor2);
+            var actual = mage.TotalAttributes();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
         #endregion
     }
 }

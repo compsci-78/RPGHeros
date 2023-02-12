@@ -2,6 +2,7 @@
 using RPGHeros.Exceptions;
 using RPGHeros.Heros;
 using RPGHeros.Items;
+using System;
 
 namespace RPGHerosTest.Heros
 {
@@ -141,6 +142,63 @@ namespace RPGHerosTest.Heros
             var ranger = new Ranger("Ranger");
             //Assertion
             Assert.Throws<InvalidArmorTypeException>(() => ranger.Equip(armorWithRequiredLevel));
+        }
+        [Fact]
+        public void TotalAttributes_CalculatingHerosTotalAttributesWithNoEquipment_ShouldReturnCorrectHeroAttributes()
+        {
+            //Arrangement            
+            var expected = new HeroAttributes() { Strength = 1, Dexterity = 7, Intelligence = 1 };
+            //Act
+            var ranger = new Ranger("Ranger");
+            var actual = ranger.TotalAttributes();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void TotalAttributes_CalculatingHerosTotalAttributesWithOneEquipment_ShouldReturnCorrectHeroAttributes()
+        {
+            //Arrangement                        
+            // Initial values { Strength = 1, Dexterity = 7, Intelligence = 1 }
+            var expected = new HeroAttributes() { Strength = 2, Dexterity = 8, Intelligence = 2 };
+            var armor = new Armor("Leather", 0, Slot.Body, ArmorType.Leather, new HeroAttributes() { Strength = 1, Dexterity = 1, Intelligence = 1 });
+            //Act
+            var ranger = new Ranger("Ranger");
+            ranger.Equip(armor);
+            var actual = ranger.TotalAttributes();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void TotalAttributes_CalculatingHerosTotalAttributesWithTwoEquipment_ShouldReturnCorrectHeroAttributes()
+        {
+            //Arrangement                        
+            // Initial values { Strength = 1, Dexterity = 7, Intelligence = 1 }
+            var expected = new HeroAttributes() { Strength = 3, Dexterity = 9, Intelligence = 3 };
+            var armor1 = new Armor("Leather", 0, Slot.Head, ArmorType.Leather, new HeroAttributes() { Strength = 1, Dexterity = 1, Intelligence = 1 });
+            var armor2 = new Armor("Mail", 0, Slot.Body, ArmorType.Mail, new HeroAttributes() { Strength = 1, Dexterity = 1, Intelligence = 1 });
+            //Act
+            var ranger = new Ranger("Ranger");
+            ranger.Equip(armor1);
+            ranger.Equip(armor2);
+            var actual = ranger.TotalAttributes();
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void TotalAttributes_CalculatingHerosTotalAttributesWithReplacedEquipment_ShouldReturnCorrectHeroAttributes()
+        {
+            //Arrangement                        
+            // Initial values { Strength = 1, Dexterity = 7, Intelligence = 1 }
+            var expected = new HeroAttributes() { Strength = 2, Dexterity = 8, Intelligence = 2 };
+            var armor1 = new Armor("Leather", 0, Slot.Body, ArmorType.Leather, new HeroAttributes() { Strength = 1, Dexterity = 1, Intelligence = 1 });
+            var armor2 = new Armor("Mail", 0, Slot.Body, ArmorType.Mail, new HeroAttributes() { Strength = 1, Dexterity = 1, Intelligence = 1 });
+            //Act
+            var ranger = new Ranger("Ranger");
+            ranger.Equip(armor1);
+            ranger.Equip(armor2);
+            var actual = ranger.TotalAttributes();
+            //Assertion
+            Assert.Equal(expected, actual);
         }
         #endregion
     }
