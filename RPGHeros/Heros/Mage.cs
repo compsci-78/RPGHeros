@@ -28,7 +28,6 @@ namespace RPGHeros.Heros
             ValidArmorTypes = new List<ArmorType>();
             ValidArmorTypes.Add(ArmorType.Cloth);
         }
-
         public override int Damage()
         {
             var weponDamage = Equipment[Slot.Weapon] == null ? 1 : ((Weapon)Equipment[Slot.Weapon]).WeaponDamage;

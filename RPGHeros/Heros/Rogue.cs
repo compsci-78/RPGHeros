@@ -29,7 +29,6 @@ namespace RPGHeros.Heros
             ValidArmorTypes.Add(ArmorType.Leather);
             ValidArmorTypes.Add(ArmorType.Mail);
         }
-
         public override int Damage()
         {
             var weponDamage = Equipment[Slot.Weapon] == null ? 1 : ((Weapon)Equipment[Slot.Weapon]).WeaponDamage;
