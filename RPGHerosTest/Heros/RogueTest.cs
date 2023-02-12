@@ -1,12 +1,19 @@
-﻿using RPGHeros.Enums;
+﻿using Microsoft.VisualStudio.TestPlatform.Utilities;
+using RPGHeros.Enums;
 using RPGHeros.Exceptions;
 using RPGHeros.Heros;
 using RPGHeros.Items;
+using Xunit.Abstractions;
 
 namespace RPGHerosTest.Heros
 {
     public class RogueTest
     {
+        private readonly ITestOutputHelper output;
+        public RogueTest(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
         #region Creation
         [Fact]
         public void Rogue_CreatesRogueInstance_ShouldCreateRogueWithCorrectName()
@@ -266,6 +273,23 @@ namespace RPGHerosTest.Heros
             //Assertion
             Assert.Equal(expected, actual);
         }
+        [Fact]
+        public void Display_DisplayingHeroStatus_ShouldReturnCorrectStatus()
+        {
+            //Arrangement                                    
+            var weapon = new Weapon("Swords", 0, Slot.Weapon, WeaponType.Swords, 2);
+            var armor = new Armor("Leather", 0, Slot.Body, ArmorType.Leather, new HeroAttributes() { Strength = 1, Dexterity = 1, Intelligence = 1 });
+            //Act
+            var rogue = new Rogue("Rogue");
+            rogue.Equip(weapon);
+            rogue.Equip(armor);
+            rogue.LevelUp();
+
+            var actual = rogue.Display();
+            //Assertion
+            output.WriteLine(actual.ToString());
+        }
+
         #endregion
     }
 }

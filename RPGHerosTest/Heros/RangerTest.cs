@@ -3,11 +3,18 @@ using RPGHeros.Exceptions;
 using RPGHeros.Heros;
 using RPGHeros.Items;
 using System;
+using Xunit.Abstractions;
 
 namespace RPGHerosTest.Heros
 {
     public class RangerTest
     {
+        private readonly ITestOutputHelper output;
+        public RangerTest(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
+
         #region Creation
         [Fact]
         public void Ranger_CreatesRangerInstance_ShouldCreateRangerWithCorrectName()
@@ -248,6 +255,22 @@ namespace RPGHerosTest.Heros
             var actual = ranger.Damage();
             //Assertion
             Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void Display_DisplayingHeroStatus_ShouldReturnCorrectStatus()
+        {
+            //Arrangement                                    
+            var weapon = new Weapon("Bows", 0, Slot.Weapon, WeaponType.Bows, 2);
+            var armor = new Armor("Leather", 0, Slot.Body, ArmorType.Leather, new HeroAttributes() { Strength = 1, Dexterity = 1, Intelligence = 1 });
+            //Act
+            var ranger= new Ranger("Ranger");
+            ranger.Equip(weapon);
+            ranger.Equip(armor);
+            ranger.LevelUp();
+
+            var actual = ranger.Display();
+            //Assertion
+            output.WriteLine(actual.ToString());
         }
         #endregion
     }

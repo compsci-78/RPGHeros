@@ -82,20 +82,20 @@ namespace RPGHeros.Heros
 
             return totalAttributes;
         }
-        public void Display()
+        public StringBuilder Display()
         {
             var totalAttributes = TotalAttributes();
 
             StringBuilder sb = new StringBuilder();
-            sb.Append("Name ..............: " + Name);
-            sb.Append("Level .............: " + Level);
-            sb.Append("Class .............: " + this.GetType().Name);
-            sb.Append("Total strength ....: " + totalAttributes.Strength);
-            sb.Append("Total dexterity ...: " + totalAttributes.Dexterity);
-            sb.Append("Total intelligence : " + totalAttributes.Intelligence);
-            sb.Append("Damage ............: " + Damage());
+            sb.Append("Name ..............: " + Name+"\n");
+            sb.Append("Level .............: " + Level + "\n");
+            sb.Append("Class .............: " + this.GetType().Name + "\n");
+            sb.Append("Total strength ....: " + totalAttributes.Strength + "\n");
+            sb.Append("Total dexterity ...: " + totalAttributes.Dexterity + "\n");
+            sb.Append("Total intelligence : " + totalAttributes.Intelligence + "\n");
+            sb.Append("Damage ............: " + Damage() + "\n");
 
-            Console.WriteLine(sb);
+            return sb;
         }
     }
 }

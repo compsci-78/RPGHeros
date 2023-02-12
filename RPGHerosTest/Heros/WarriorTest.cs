@@ -1,14 +1,21 @@
-﻿using RPGHeros.Enums;
+﻿using Microsoft.VisualStudio.TestPlatform.Utilities;
+using RPGHeros.Enums;
 using RPGHeros.Exceptions;
 using RPGHeros.Heros;
 using RPGHeros.Items;
 using System.Threading;
+using Xunit.Abstractions;
 
 namespace RPGHerosTest.Heros
 {
     
     public class WarriorTest
     {
+        private readonly ITestOutputHelper output;
+        public WarriorTest(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
         #region Creation
         [Fact]
         public void Warrior_CreatesWarriorInstance_ShouldCreateWarriorWithCorrectName()
@@ -268,6 +275,23 @@ namespace RPGHerosTest.Heros
             //Assertion
             Assert.Equal(expected, actual);
         }
+        [Fact]
+        public void Display_DisplayingHeroStatus_ShouldReturnCorrectStatus()
+        {
+            //Arrangement                                    
+            var weapon = new Weapon("Hammers", 0, Slot.Weapon, WeaponType.Hammers, 2);
+            var armor = new Armor("Mail", 0, Slot.Head, ArmorType.Mail, new HeroAttributes() { Strength = 1, Dexterity = 1, Intelligence = 1 });
+            //Act
+            var warrior = new Warrior("Warrior");
+            warrior.Equip(weapon);
+            warrior.Equip(armor);
+            warrior.LevelUp();
+
+            var actual = warrior.Display();
+            //Assertion
+            output.WriteLine(actual.ToString());
+        }
+
         #endregion
     }
 }

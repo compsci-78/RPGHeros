@@ -2,11 +2,18 @@ using RPGHeros.Enums;
 using RPGHeros.Exceptions;
 using RPGHeros.Heros;
 using RPGHeros.Items;
+using Xunit.Abstractions;
+using Xunit.Sdk;
 
 namespace RPGHerosTest.Heros
 {
     public class MageTest
     {
+        private readonly ITestOutputHelper output;
+        public MageTest(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
         #region Creation
         [Fact]
         public void Mage_CreatesMageInstance_ShouldCreateMageWithCorrectName()
@@ -267,6 +274,23 @@ namespace RPGHerosTest.Heros
             //Assertion
             Assert.Equal(expected, actual);
         }
+        [Fact]
+        public void Display_DisplayingHeroStatus_ShouldReturnCorrectStatus()
+        {
+            //Arrangement                                    
+            var weapon = new Weapon("Staffs", 0, Slot.Weapon, WeaponType.Staffs, 2);
+            var armor = new Armor("Cloth", 0, Slot.Body, ArmorType.Cloth, new HeroAttributes() {Strength=1,Dexterity=1,Intelligence=1 });
+            //Act
+            var mage = new Mage("Mage");
+            mage.Equip(weapon);
+            mage.Equip(armor);
+            mage.LevelUp();
+
+            var actual = mage.Display();
+            //Assertion
+           output.WriteLine(actual.ToString());
+        }
+
         #endregion
     }
 }
