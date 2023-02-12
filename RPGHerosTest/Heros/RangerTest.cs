@@ -1,14 +1,17 @@
-﻿using RPGHeros.Heros;
-
+﻿using RPGHeros.Enums;
+using RPGHeros.Exceptions;
+using RPGHeros.Heros;
+using RPGHeros.Items;
 
 namespace RPGHerosTest.Heros
 {
     public class RangerTest
     {
+        #region Creation
         [Fact]
         public void Ranger_CreatesRangerInstance_ShouldCreateRangerWithCorrectName()
         {
-            //Arangement
+            //Arrangement
             var name = "Ranger";
             var expected = "Ranger";
             //Act
@@ -20,7 +23,7 @@ namespace RPGHerosTest.Heros
         [Fact]
         public void Ranger_CreatesRangerInstance_ShouldCreateRangerWithCorrectLevel()
         {
-            //Arangement
+            //Arrangement
             var name = "Ranger";
             var expected = 1;
             //Act
@@ -32,7 +35,7 @@ namespace RPGHerosTest.Heros
         [Fact]
         public void Ranger_CreatesRangerInstance_ShouldCreateRangerWithCorrectAttributes()
         {
-            //Arangement
+            //Arrangement
             var name = "Ranger";
             var expected = new HeroAttributes() { Strength = 1, Dexterity = 7, Intelligence = 1 };
             //Act
@@ -44,7 +47,7 @@ namespace RPGHerosTest.Heros
         [Fact]
         public void LevelUp_IncreasesHeroLevel_ShouldIncrementLevel()
         {
-            //Arangement
+            //Arrangement
             var name = "Ranger";
             var expected = 2;
             //Act
@@ -60,7 +63,7 @@ namespace RPGHerosTest.Heros
             // 1 7 1 => Level 1                       
             // 1 5 1 => Adds to level 1 by LeveUp() method.
 
-            //Arangement
+            //Arrangement
             var name = "Ranger";
             var expected = new HeroAttributes() { Strength = 2, Dexterity = 12, Intelligence = 2 };
             //Act
@@ -70,6 +73,76 @@ namespace RPGHerosTest.Heros
             //Assertion
             Assert.Equal(expected, actual);
         }
+        #endregion
+
+        #region Methods
+        [Fact]
+        public void Equip_EquippingHeroWithItems_ShouldEquipHeroWithCorrectWeapon()
+        {
+            //Arrangement
+            var weaponSlot = Slot.Weapon;
+            var expected = new Weapon("Bows", 0, weaponSlot, WeaponType.Bows, 0);
+            //Act
+            var ranger = new Ranger("Ranger");
+            ranger.Equip(expected);
+            var actual = ranger.Equipment[weaponSlot];
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void Equip_EquippingHeroWithItemWithRequiredLevel_ShouldThorwInvalidWeaponException()
+        {
+            //Arrangement            
+            var weaponWithRequiredLevel = new Weapon("Bows", 3, Slot.Weapon, WeaponType.Bows, 0);
+            //Act
+            var ranger = new Ranger("Ranger");
+            //Assertion
+            Assert.Throws<InvalidWeaponTypeException>(() => ranger.Equip(weaponWithRequiredLevel));
+        }
+        [Fact]
+        public void Equip_EquippingHeroWithItemWithInvalidWeaponType_ShouldThorwInvalidWeaponException()
+        {
+            //Arrangement            
+            var weaponWithRequiredLevel = new Weapon("Staffs", 0, Slot.Weapon, WeaponType.Staffs, 0);
+            //Act
+            var ranger = new Ranger("Ranger");
+            //Assertion
+            Assert.Throws<InvalidWeaponTypeException>(() => ranger.Equip(weaponWithRequiredLevel));
+        }
+        [Fact]
+        public void Equip_EquippingHeroWithItems_ShouldEquipHeroWithCorrectArmor()
+        {
+            //Arrangement
+            var armorSlot = Slot.Body;
+            var expected = new Armor("Leather", 0, armorSlot, ArmorType.Leather, new HeroAttributes());
+            //Act
+            var ranger = new Ranger("Ranger");
+            ranger.Equip(expected);
+            var actual = ranger.Equipment[armorSlot];
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void Equip_EquippingHeroWithItemWithRequiredLevel_ShouldThrowInvalidArmorException()
+        {
+            //Arrangement            
+            var armorWithRequiredLevel = new Armor("Leather", 3, Slot.Body, ArmorType.Cloth, new HeroAttributes());
+            //Act
+            var ranger = new Ranger("Ranger");
+            //Assertion
+            Assert.Throws<InvalidArmorTypeException>(() => ranger.Equip(armorWithRequiredLevel));
+        }
+        [Fact]
+        public void Equip_EquippingHeroWithItemWithInvalidArmorType_ShouldThrowInvalidArmorException()
+        {
+            //Arrangement            
+            var armorWithRequiredLevel = new Armor("Cloth", 0, Slot.Body, ArmorType.Cloth, new HeroAttributes());
+            //Act
+            var ranger = new Ranger("Ranger");
+            //Assertion
+            Assert.Throws<InvalidArmorTypeException>(() => ranger.Equip(armorWithRequiredLevel));
+        }
+        #endregion
     }
 }
 

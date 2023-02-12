@@ -41,16 +41,18 @@ namespace RPGHeros.Heros
                 }
             }
 
-            // If wepon not found throw Invalid weapon exception
+            // If weapon not found throw Invalid weapon exception
             if (!validWepon)
                 throw new InvalidWeaponTypeException();
         }
         public void Equip(Armor armor)
         {
-
             bool validArmor = false;
+            // If weapon level higher than Hero´s Throw an exception
+            if (armor.RequiredLevel > Level)
+                throw new InvalidArmorTypeException("Invalid armor: Higher level required.");
 
-            // Checking valid weapons
+            // Checking valid armor
             foreach (var armowType in ValidArmorTypes)
             {
                 if (armowType == armor.ArmorType)
@@ -60,7 +62,7 @@ namespace RPGHeros.Heros
                 }
             }
 
-            // If wepon not found throw Invalid weapon exception
+            // If armor not found throw Invalid armor exception
             if (!validArmor)
                 throw new InvalidArmorTypeException();
         }

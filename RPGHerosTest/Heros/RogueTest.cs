@@ -1,9 +1,13 @@
-﻿using RPGHeros.Heros;
+﻿using RPGHeros.Enums;
+using RPGHeros.Exceptions;
+using RPGHeros.Heros;
+using RPGHeros.Items;
 
 namespace RPGHerosTest.Heros
 {
     public class RogueTest
     {
+        #region Creation
         [Fact]
         public void Rogue_CreatesRogueInstance_ShouldCreateRogueWithCorrectName()
         {
@@ -69,5 +73,75 @@ namespace RPGHerosTest.Heros
             //Assertion
             Assert.Equal(expected, actual);
         }
+        #endregion
+
+        #region Methods
+        [Fact]
+        public void Equip_EquippingHeroWithItems_ShouldEquipHeroWithCorrectWeapon()
+        {
+            //Arrangement
+            var weaponSlot = Slot.Weapon;
+            var expected = new Weapon("Daggers", 0, weaponSlot, WeaponType.Daggers, 0);
+            //Act
+            var rogue = new Rogue("Rogue");
+            rogue.Equip(expected);
+            var actual = rogue.Equipment[weaponSlot];
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void Equip_EquippingHeroWithItemWithRequiredLevel_ShouldThorwInvalidWeaponException()
+        {
+            //Arrangement            
+            var weaponWithRequiredLevel = new Weapon("Daggers", 3, Slot.Weapon, WeaponType.Daggers, 0);
+            //Act
+            var rogue = new Rogue("Rogue");
+            //Assertion
+            Assert.Throws<InvalidWeaponTypeException>(() => rogue.Equip(weaponWithRequiredLevel));
+        }
+        [Fact]
+        public void Equip_EquippingHeroWithItemWithInvalidWeaponType_ShouldThorwInvalidWeaponException()
+        {
+            //Arrangement            
+            var weaponWithRequiredLevel = new Weapon("Staffs", 0, Slot.Weapon, WeaponType.Staffs, 0);
+            //Act
+            var rogue = new Rogue("Rogue");
+            //Assertion
+            Assert.Throws<InvalidWeaponTypeException>(() => rogue.Equip(weaponWithRequiredLevel));
+        }
+        [Fact]
+        public void Equip_EquippingHeroWithItems_ShouldEquipHeroWithCorrectArmor()
+        {
+            //Arrangement
+            var armorSlot = Slot.Body;
+            var expected = new Armor("Leather", 0, armorSlot, ArmorType.Leather, new HeroAttributes());
+            //Act
+            var rogue = new Rogue("Rogue");
+            rogue.Equip(expected);
+            var actual = rogue.Equipment[armorSlot];
+            //Assertion
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void Equip_EquippingHeroWithItemWithRequiredLevel_ShouldThrowInvalidArmorException()
+        {
+            //Arrangement            
+            var armorWithRequiredLevel = new Armor("Leather", 3, Slot.Body, ArmorType.Cloth, new HeroAttributes());
+            //Act
+            var rogue = new Rogue("Rogue");
+            //Assertion
+            Assert.Throws<InvalidArmorTypeException>(() => rogue.Equip(armorWithRequiredLevel));
+        }
+        [Fact]
+        public void Equip_EquippingHeroWithItemWithInvalidArmorType_ShouldThrowInvalidArmorException()
+        {
+            //Arrangement            
+            var armorWithRequiredLevel = new Armor("Cloth", 0, Slot.Body, ArmorType.Cloth, new HeroAttributes());
+            //Act
+            var rogue = new Rogue("Rogue");
+            //Assertion
+            Assert.Throws<InvalidArmorTypeException>(() => rogue.Equip(armorWithRequiredLevel));
+        }
+        #endregion
     }
 }
