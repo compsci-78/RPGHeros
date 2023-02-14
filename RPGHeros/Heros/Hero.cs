@@ -12,7 +12,7 @@ namespace RPGHeros.Heros
 {
     public abstract class Hero
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public int Level { get; set; }
         public HeroAttributes LevelAttributes { get; set; }
         public Dictionary<Slot, Item> Equipment { get; set; }
@@ -23,6 +23,12 @@ namespace RPGHeros.Heros
             this.Name = name;
         }
         public abstract void LevelUp();
+        /// <summary>
+        /// Equping Hero with a valid wapon. Thorws an exeption if Hero doesn't have the required level
+        /// or trying to equip an invalid weapon.
+        /// </summary>
+        /// <param name="weapon"></param>
+        /// <exception cref="InvalidWeaponTypeException"></exception>
         public void Equip(Weapon weapon)
         {
 
@@ -45,6 +51,12 @@ namespace RPGHeros.Heros
             if (!validWepon)
                 throw new InvalidWeaponTypeException();
         }
+        /// <summary>
+        /// Equping Hero with a valid armor. Thorws an exeption if Hero doesn't have the required level
+        /// or trying to equip an invalid armor.
+        /// </summary>
+        /// <param name="armor"></param>
+        /// <exception cref="InvalidArmorTypeException"></exception>
         public void Equip(Armor armor)
         {
             bool validArmor = false;
@@ -67,9 +79,12 @@ namespace RPGHeros.Heros
                 throw new InvalidArmorTypeException();
         }
         public abstract int Damage();
+        /// <summary>
+        /// Calculating Heros total attributes that is gained from leveling up and equiped armors attribute.
+        /// </summary>
+        /// <returns>HeroAttributes</returns>
         public HeroAttributes TotalAttributes()
         {
-
             var totalAttributes = new HeroAttributes();
 
             foreach (KeyValuePair<Slot, Item> keyValue in Equipment)
@@ -82,6 +97,10 @@ namespace RPGHeros.Heros
 
             return totalAttributes;
         }
+        /// <summary>
+        /// Displays current Hero state. 
+        /// </summary>
+        /// <returns>StringBuilder</returns>
         public StringBuilder Display()
         {
             var totalAttributes = TotalAttributes();

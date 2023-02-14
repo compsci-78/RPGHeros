@@ -26,7 +26,12 @@ namespace RPGHeros.Heros
         {
             return HashCode.Combine(Strength, Dexterity, Intelligence);
         }
-
+        /// <summary>
+        /// Operator overloading that defines how two instances og HeroAttribute should add gether
+        /// </summary>
+        /// <param name="leftSide"></param>
+        /// <param name="rightSide"></param>
+        /// <returns>HeroAttribute</returns>
         public static HeroAttributes operator +(HeroAttributes leftSide, HeroAttributes rightSide)
         {
             return new HeroAttributes()

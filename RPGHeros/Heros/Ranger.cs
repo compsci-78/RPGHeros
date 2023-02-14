@@ -28,7 +28,11 @@ namespace RPGHeros.Heros
             ValidArmorTypes.Add(ArmorType.Leather);
             ValidArmorTypes.Add(ArmorType.Mail);
         }
-
+        /// <summary>
+        /// Method to calculate the damage a Hero deals based on equiped weapon that has a damage value increased 
+        /// by total dexterity of the hero. If a Hero has no weapon weapon damage will be equal to 1.
+        /// </summary>
+        /// <returns>int</returns>
         public override int Damage()
         {
             var weponDamage = Equipment[Slot.Weapon] == null ? 1 : ((Weapon)Equipment[Slot.Weapon]).WeaponDamage;
@@ -36,6 +40,9 @@ namespace RPGHeros.Heros
 
             return weponDamage * (1 + (totalAttributes.Dexterity / 100));
         }
+        /// <summary>
+        /// Method to level up the Hero by 1 and LevelAttribute with hero specific values.
+        /// </summary>
         public override void LevelUp()
         {
             Level += 1;
